@@ -6,11 +6,12 @@
 
     <LinearLayout
         android:id="@+id/text"
-        android:paddingTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="100">
+        android:paddingTop="20dp"
+        android:weightSum="100"
+        android:gravity="center">
 
         <Space
             android:layout_width="0dp"
@@ -30,33 +31,19 @@
             android:layout_weight="10"/>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
+    <WebView
+        android:id="@+id/webView"
+        android:layout_centerInParent="true"
+        android:background="@color/background"
         android:layout_width="match_parent"
-        android:layout_height="260dp"
+        android:layout_height="280dp"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/text"
-        android:orientation="horizontal"
-        android:weightSum="100">
-
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="10"/>
-
-        <WebView
-            android:id="@+id/webView"
-            android:layout_width="0dp"
-            android:layout_height="250dp"
-            android:layout_gravity="center"
-            android:layout_weight="80"/>
-
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="10"/>
-    </LinearLayout>
+        android:layout_gravity="center"
+        android:layout_margin="10dp"/>
 
     <ImageButton
         android:id="@+id/btShare"
@@ -66,10 +53,9 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
         android:layout_marginEnd="45dp"
         android:layout_marginRight="45dp"
         android:background="@drawable/share_background"
-        android:src="@android:drawable/ic_menu_share"
-        android:layout_marginBottom="20dp"
-        />
+        android:src="@android:drawable/ic_menu_share"/>
 </RelativeLayout>

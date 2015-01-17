@@ -11,16 +11,17 @@ import java.util.List;
 import java.util.Random;
 
 import es.moodbox.feelify.R;
+import es.moodbox.feelify.giphy.model.MoodModel;
 
 /**
  * Created by machete on 1/17/15.
  */
-public class MoodsAdapter extends ArrayAdapter<String> {
+public class MoodsAdapter extends ArrayAdapter<MoodModel> {
     // declaring our ArrayList of items
-    private List<String> objects;
+    private List<MoodModel> objects;
     private Random random;
     private int[] colors;
-    public MoodsAdapter(Context context, int layoutResourceId, List<String> objects) {
+    public MoodsAdapter(Context context, int layoutResourceId, List<MoodModel> objects) {
         super(context, layoutResourceId, objects);
         this.objects = objects;
         random = new Random();
@@ -41,7 +42,7 @@ public class MoodsAdapter extends ArrayAdapter<String> {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = inflater.inflate(R.layout.moods_list_item, null);
         }
-        String txt = objects.get(position);
+        String txt = objects.get(position).name;
 
         TextView tv = (TextView) v.findViewById(R.id.mood_list_item);
         tv.setText(txt);

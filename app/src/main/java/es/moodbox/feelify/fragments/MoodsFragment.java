@@ -16,6 +16,7 @@ import java.util.List;
 import es.moodbox.feelify.R;
 import es.moodbox.feelify.activities.MoodCreationActivity;
 import es.moodbox.feelify.adapters.MoodsAdapter;
+import es.moodbox.feelify.giphy.model.MoodModel;
 import es.moodbox.feelify.giphy.model.SimpleModel;
 import es.moodbox.feelify.giphy.services.GiphyServiceInterface;
 import retrofit.Callback;
@@ -39,9 +40,30 @@ public class MoodsFragment extends Fragment {
         moods.add("naughty");
         moods.add("laugh");
 
+	    List<String> moodsTags = new ArrayList<>();
+	    moodsTags.add("funny,laugh,lol");
+	    moodsTags.add("happy,laugh,jump");
+	    moodsTags.add("spicy");
+	    moodsTags.add("sad,tears");
+	    moodsTags.add("grumpy");
+	    moodsTags.add("muffin");
+	    moodsTags.add("naughty");
+	    moodsTags.add("laugh");
+
+	    List<MoodModel> moodModels = new ArrayList<MoodModel>();
+	    MoodModel mood;
+	    int index = 0;
+	    for(String moodName : moods){
+		    mood = new MoodModel();
+		    mood.id = index+"";
+		    mood.name = moodName;
+		    mood.searchTags = moodsTags.get(index);
+		    moodModels.add(mood);
+	    }
 
 
-        final MoodsAdapter mAdapter = new MoodsAdapter(getActivity(),R.layout.moods_list_item, moods);
+
+        final MoodsAdapter mAdapter = new MoodsAdapter(getActivity(),R.layout.moods_list_item, moodModels);
         View v =  inflater.inflate(R.layout.fragment_main, container, false);
 
         ListView listView =  (ListView)v.findViewById(R.id.moodlist_id);
@@ -54,7 +76,7 @@ public class MoodsFragment extends Fragment {
                         .build();
 
                 GiphyServiceInterface service = restAdapter.create(GiphyServiceInterface.class);
-                String searchParameter = (String)mAdapter.getItem(position);
+                String searchParameter = mAdapter.getItem(position).searchTags.replace(",","+");
                 service.random(searchParameter, new Callback<SimpleModel>() {
                     @Override
                     public void success(SimpleModel o, Response response) {
