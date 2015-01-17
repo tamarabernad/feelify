@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -16,6 +15,7 @@ import java.util.List;
 
 import es.moodbox.feelify.R;
 import es.moodbox.feelify.activities.MoodCreationActivity;
+import es.moodbox.feelify.adapters.MoodsAdapter;
 import es.moodbox.feelify.giphy.model.GiphyModel;
 import es.moodbox.feelify.giphy.services.GiphyServiceInterface;
 import retrofit.Callback;
@@ -41,7 +41,7 @@ public class MoodsFragment extends Fragment {
 
 
 
-        final ArrayAdapter mAdapter = new ArrayAdapter<String>(getActivity(),R.layout.moods_list_item,moods);
+        final MoodsAdapter mAdapter = new MoodsAdapter(getActivity(),R.layout.moods_list_item, moods);
         View v =  inflater.inflate(R.layout.fragment_main, container, false);
 
         ListView listView =  (ListView)v.findViewById(R.id.moodlist_id);
