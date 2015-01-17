@@ -1,15 +1,14 @@
 package es.moodbox.feelify.fragments;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -42,7 +41,7 @@ public class MoodsFragment extends Fragment {
 
 
 
-        final ArrayAdapter mAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,moods);
+        final ArrayAdapter mAdapter = new ArrayAdapter<String>(getActivity(),R.layout.moods_list_item,moods);
         View v =  inflater.inflate(R.layout.fragment_main, container, false);
 
         ListView listView =  (ListView)v.findViewById(R.id.moodlist_id);
