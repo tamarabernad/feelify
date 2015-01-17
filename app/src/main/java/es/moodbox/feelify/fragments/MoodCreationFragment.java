@@ -17,6 +17,7 @@ import java.io.File;
 import java.net.URL;
 
 import es.moodbox.feelify.R;
+import es.moodbox.feelify.activities.BasicActivity;
 import es.moodbox.feelify.services.FileDownloader;
 import es.moodbox.feelify.utils.AppConstants;
 
@@ -54,6 +55,7 @@ public class MoodCreationFragment extends Fragment {
     public class DownloadFilesTask extends AsyncTask<URL, Integer, File> {
 
         protected File doInBackground(URL... urls) {
+            ((BasicActivity)getActivity()).showActionBarSpinner();
             int count = urls.length;
             long totalSize = 0;
             File tmp = null;
@@ -82,7 +84,9 @@ public class MoodCreationFragment extends Fragment {
             } catch (Exception e) {
                 Log.e(TAG, "ups: "+e.getMessage());
                 e.printStackTrace();
+                ((BasicActivity)getActivity()).hideActionBarSpinner();
             }
+            ((BasicActivity)getActivity()).hideActionBarSpinner();
         }
     }
 

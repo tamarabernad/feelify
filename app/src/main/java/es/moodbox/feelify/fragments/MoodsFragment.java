@@ -16,7 +16,7 @@ import java.util.List;
 import es.moodbox.feelify.R;
 import es.moodbox.feelify.activities.MoodCreationActivity;
 import es.moodbox.feelify.adapters.MoodsAdapter;
-import es.moodbox.feelify.giphy.model.GiphyModel;
+import es.moodbox.feelify.giphy.model.SimpleModel;
 import es.moodbox.feelify.giphy.services.GiphyServiceInterface;
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -49,19 +49,19 @@ public class MoodsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 RestAdapter restAdapter = new RestAdapter.Builder()
-                        .setEndpoint("http://api.giphy.com/v1/gifs")
+                        .setEndpoint("http://api.giphy.com/v1/stickers/")
                         .setLogLevel(RestAdapter.LogLevel.FULL)
                         .build();
 
                 GiphyServiceInterface service = restAdapter.create(GiphyServiceInterface.class);
                 String searchParameter = (String)mAdapter.getItem(position);
-                service.search(searchParameter,new Callback<GiphyModel>() {
+                service.random(searchParameter, new Callback<SimpleModel>() {
                     @Override
-                    public void success(GiphyModel o, Response response) {
+                    public void success(SimpleModel o, Response response) {
                         Log.d("MoodsFragment", o.toString());
                         Intent intent = new Intent(getActivity(), MoodCreationActivity.class);
-                        String url = o.mGiphyData.get(0).images.image.mUrl;
-                        intent.putExtra("url",url);
+                        String url = o.mGiphyData.mUrl;
+                        intent.putExtra("url", url);
                         startActivity(intent);
                     }
 
