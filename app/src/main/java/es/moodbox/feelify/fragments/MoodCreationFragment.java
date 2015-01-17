@@ -12,14 +12,22 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import java.io.File;
 import java.net.URL;
 
 import es.moodbox.feelify.R;
 import es.moodbox.feelify.activities.BasicActivity;
+import es.moodbox.feelify.giphy.model.MoodModel;
+import es.moodbox.feelify.giphy.model.SimpleModel;
+import es.moodbox.feelify.giphy.services.GiphyServiceInterface;
 import es.moodbox.feelify.services.FileDownloader;
 import es.moodbox.feelify.utils.AppConstants;
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class MoodCreationFragment extends Fragment {
 
@@ -27,35 +35,75 @@ public class MoodCreationFragment extends Fragment {
 
     private WebView mWebView;
     private EditText mTextEdit;
-    private String mUrl;
+    private MoodModel mMoodModel;
+    private SimpleModel mSimpleModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v =inflater.inflate(R.layout.fragment_mood_creation, container, false);
-        mWebView =(WebView) v.findViewById(R.id.webView);
+        View v = inflater.inflate(R.layout.fragment_mood_creation, container, false);
+        mWebView = (WebView) v.findViewById(R.id.webView);
 
-        ImageButton btShare =(ImageButton) v.findViewById(R.id.btShare);
-        mTextEdit = (EditText)v.findViewById(R.id.editText);
+        ImageButton btShare = (ImageButton) v.findViewById(R.id.btShare);
+        mTextEdit = (EditText) v.findViewById(R.id.editText);
+
+        mMoodModel = (MoodModel) getActivity().getIntent().getSerializableExtra("model");
 
         btShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    new DownloadFilesTask().execute(new URL(mUrl));
+                    if (mSimpleModel == null) {
+                        somethingWentWrong();
+                    }else {
+                        new DownloadFilesTask().execute(new URL(mSimpleModel.mGiphyData.mUrl));
+                    }
                 } catch (Exception e) {
-                    Log.e(TAG, "Ups...."+e.getMessage());
+                    Log.e(TAG, "Ups...." + e.getMessage());
+                    somethingWentWrong();
                 }
             }
         });
         return v;
     }
 
+    private void somethingWentWrong() {
+        Toast toast = Toast.makeText(getActivity(),"You just broke the app :_(",Toast.LENGTH_LONG);
+        toast.show();
+    }
+
+    public void init() {
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint("http://api.giphy.com/v1/stickers/")
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .build();
+
+        GiphyServiceInterface service = restAdapter.create(GiphyServiceInterface.class);
+        String searchParameter = mMoodModel.searchTags.replace(",","+");
+        service.random(searchParameter, new Callback<SimpleModel>() {
+
+            @Override
+            public void success(SimpleModel o, Response response) {
+                mSimpleModel = o;
+	            mWebView.loadUrl(mSimpleModel.mGiphyData.mUrl);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("MainActivity", error.getMessage());
+            }
+        });
+    }
+
+    public void onResume() {
+        super.onResume();
+        init();
+    }
     public class DownloadFilesTask extends AsyncTask<URL, Integer, File> {
 
         protected File doInBackground(URL... urls) {
-            ((BasicActivity)getActivity()).showActionBarSpinner();
+            ((BasicActivity) getActivity()).showActionBarSpinner();
             int count = urls.length;
             long totalSize = 0;
             File tmp = null;
@@ -63,7 +111,7 @@ public class MoodCreationFragment extends Fragment {
                 tmp = FileDownloader.download(getActivity(), AppConstants.IMG_NAME, ".gif", urls[i]);
                 if (tmp != null) {
                     totalSize += tmp.length();
-                    Log.d(TAG, "Downloaded total: "+totalSize+ " url: "+urls[i].toString());
+                    Log.d(TAG, "Downloaded total: " + totalSize + " url: " + urls[i].toString());
                 }
 
                 publishProgress((int) ((i / (float) count) * 100));
@@ -78,19 +126,19 @@ public class MoodCreationFragment extends Fragment {
 
         protected void onPostExecute(File result) {
             Uri path = Uri.fromFile(result);
-            Log.d(TAG, "Download done, sharing file: "+path);
+            Log.d(TAG, "Download done, sharing file: " + path);
             try {
                 sendFileWithUri(result);
             } catch (Exception e) {
-                Log.e(TAG, "ups: "+e.getMessage());
+                Log.e(TAG, "ups: " + e.getMessage());
                 e.printStackTrace();
-                ((BasicActivity)getActivity()).hideActionBarSpinner();
+                ((BasicActivity) getActivity()).hideActionBarSpinner();
             }
-            ((BasicActivity)getActivity()).hideActionBarSpinner();
+            ((BasicActivity) getActivity()).hideActionBarSpinner();
         }
     }
 
-    private void sendFileWithUri(File image) throws Exception{
+    private void sendFileWithUri(File image) throws Exception {
         String message = String.valueOf(mTextEdit.getText());
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
@@ -99,13 +147,5 @@ public class MoodCreationFragment extends Fragment {
         //Uri path = Uri.fromFile(new File("android.resource://com.android.mypackage/drawable/arrow.png"));
         sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(image));
         startActivity(sendIntent);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        mUrl = getActivity().getIntent().getStringExtra("url");
-        mWebView.loadUrl(mUrl);
     }
 }
