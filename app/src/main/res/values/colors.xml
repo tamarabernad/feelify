@@ -6,4 +6,7 @@
     <color name="palette4">#B720B1</color>
     <color name="palette5">#FCE300</color>
     <color name="white">#FFFFFF</color>
+    <color name="share">#ff4671d5</color>
+    <color name="background">#FFD073</color>
+    <color name="hint">@color/share</color>
 </resources>

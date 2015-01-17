@@ -10,8 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import java.io.File;
 import java.net.URL;
@@ -35,7 +35,7 @@ public class MoodCreationFragment extends Fragment {
         View v =inflater.inflate(R.layout.fragment_mood_creation, container, false);
         mWebView =(WebView) v.findViewById(R.id.webView);
 
-        Button btShare =(Button) v.findViewById(R.id.btShare);
+        ImageButton btShare =(ImageButton) v.findViewById(R.id.btShare);
         mTextEdit = (EditText)v.findViewById(R.id.editText);
 
         btShare.setOnClickListener(new View.OnClickListener() {
@@ -76,18 +76,18 @@ public class MoodCreationFragment extends Fragment {
 
         protected void onPostExecute(File result) {
             Uri path = Uri.fromFile(result);
-	        Log.d(TAG, "Download done, sharing file: "+path);
-	        try {
-		        sendFileWithUri(result);
-	        } catch (Exception e) {
-		        Log.e(TAG, "ups: "+e.getMessage());
-		        e.printStackTrace();
-	        }
+            Log.d(TAG, "Download done, sharing file: "+path);
+            try {
+                sendFileWithUri(result);
+            } catch (Exception e) {
+                Log.e(TAG, "ups: "+e.getMessage());
+                e.printStackTrace();
+            }
         }
     }
 
     private void sendFileWithUri(File image) throws Exception{
-        String message = mTextEdit.getText() + "by feely";
+        String message = String.valueOf(mTextEdit.getText());
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, message);

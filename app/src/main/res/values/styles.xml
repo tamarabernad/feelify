@@ -1,11 +1,17 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+    <style name="AppTheme" parent="android:Theme.Holo.Light">
         <!-- Customize your theme here. -->
-        <item name="android:windowActionBar">false</item>
+        <item name="android:background">@color/background</item>
+        <item name="android:actionBarStyle">@style/CustomActionBarTheme</item>
     </style>
 
+    <!-- the theme applied to the application or activity -->
+    <style name="CustomActionBarTheme" parent="@android:style/Theme.Holo">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowActionBarOverlay">true</item>
+    </style>
 
     <!-- res/values/styles.xml -->
     <style name="MoodsListView" parent="@android:style/Widget.ListView">
@@ -18,6 +24,7 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">30sp</item>
+        <item name="android:textColorHint">@color/hint</item>
     </style>
 
     <style name="MoodsListViewText" parent="@android:style/Widget.TextView">
