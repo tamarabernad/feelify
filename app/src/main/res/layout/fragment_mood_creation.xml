@@ -46,9 +46,9 @@
 
     <RelativeLayout
         android:id="@+id/loading_view"
-        android:layout_below="@+id/text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text">
 
         <ImageView
             android:layout_width="match_parent"
@@ -64,26 +64,39 @@
             android:background="@color/loading_background"/>
 
         <ProgressBar
-            android:background="@android:color/transparent"
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="110dp"/>
+            android:layout_marginTop="110dp"
+            android:background="@android:color/transparent"/>
     </RelativeLayout>
 
-    <ImageButton
-        android:id="@+id/btShare"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_gravity="center"
-        android:layout_marginBottom="20dp"
-        android:layout_marginEnd="45dp"
-        android:layout_marginRight="45dp"
-        android:background="@drawable/share_background"
-        android:src="@android:drawable/ic_menu_share"/>
+        android:orientation="horizontal"
+        android:padding="@dimen/standard_margin">
 
+        <ImageButton
+            android:id="@+id/btNext"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:background="@drawable/next_background"
+            android:src="@android:drawable/ic_media_next"/>
+
+        <ImageButton
+            android:id="@+id/btShare"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/share_background"
+            android:src="@android:drawable/ic_menu_share"/>
+    </RelativeLayout>
 </RelativeLayout>

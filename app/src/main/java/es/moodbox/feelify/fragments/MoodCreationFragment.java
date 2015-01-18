@@ -49,16 +49,18 @@ public class MoodCreationFragment extends Fragment {
         mLoading = v.findViewById(R.id.loading_view);
         mLoading.setVisibility(View.GONE);
 
-        ImageButton btShare = (ImageButton) v.findViewById(R.id.btShare);
         mTextEdit = (EditText) v.findViewById(R.id.editText);
 
         mMoodModel = (MoodModel) getActivity().getIntent().getSerializableExtra("model");
 
+        ImageButton btShare = (ImageButton) v.findViewById(R.id.btShare);
         btShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    if (mSimpleModel == null) {
+                    if (mSimpleModel == null 
+                            || mSimpleModel.mGiphyData == null 
+                            ||mSimpleModel.mGiphyData.mUrl == null ) {
                         somethingWentWrong();
                     }else {
                         new DownloadFilesTask().execute(new URL(mSimpleModel.mGiphyData.mUrl));
@@ -69,6 +71,14 @@ public class MoodCreationFragment extends Fragment {
                 }
             }
         });
+
+        ImageButton mNext = (ImageButton) v.findViewById(R.id.btNext);
+        mNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                load();
+            }
+        });
         return v;
     }
 
@@ -77,13 +87,14 @@ public class MoodCreationFragment extends Fragment {
         toast.show();
     }
 
-    public void init() {
+    public void load() {
+        showLoading();
+
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint("http://api.giphy.com/v1/stickers/")
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
 
-        showLoading();
 
         GiphyServiceInterface service = restAdapter.create(GiphyServiceInterface.class);
         String searchParameter = mMoodModel.searchTags.replace(",","+");
@@ -109,7 +120,7 @@ public class MoodCreationFragment extends Fragment {
 
     public void onResume() {
         super.onResume();
-        init();
+        load();
     }
     public class DownloadFilesTask extends AsyncTask<URL, Integer, File> {
 
@@ -158,11 +169,12 @@ public class MoodCreationFragment extends Fragment {
     }
     private void sendFileWithUri(File image) throws Exception {
         String message = String.valueOf(mTextEdit.getText());
+
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, message);
         sendIntent.setType("image/*");
-        //Uri path = Uri.fromFile(new File("android.resource://com.android.mypackage/drawable/arrow.png"));
+
         sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(image));
         startActivity(sendIntent);
     }

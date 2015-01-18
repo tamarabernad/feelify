@@ -10,4 +10,5 @@
     <color name="background">#FFD073</color>
     <color name="hint">@color/share</color>
     <color name="loading_background">@color/share</color>
+    <color name="next">@color/palette4</color>
 </resources>
