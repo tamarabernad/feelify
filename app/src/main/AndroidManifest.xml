@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.MoodCreationActivity"/>
+        <activity android:name=".activities.InfoActivity"/>
     </application>
 
 </manifest>
