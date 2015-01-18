@@ -37,6 +37,7 @@ public class MoodCreationFragment extends Fragment {
     private EditText mTextEdit;
     private MoodModel mMoodModel;
     private SimpleModel mSimpleModel;
+    private View mLoading;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,6 +45,9 @@ public class MoodCreationFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_mood_creation, container, false);
         mWebView = (WebView) v.findViewById(R.id.webView);
+
+        mLoading = v.findViewById(R.id.loading_view);
+        mLoading.setVisibility(View.GONE);
 
         ImageButton btShare = (ImageButton) v.findViewById(R.id.btShare);
         mTextEdit = (EditText) v.findViewById(R.id.editText);
@@ -79,6 +83,8 @@ public class MoodCreationFragment extends Fragment {
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
 
+        showLoading();
+
         GiphyServiceInterface service = restAdapter.create(GiphyServiceInterface.class);
         String searchParameter = mMoodModel.searchTags.replace(",","+");
         service.random(searchParameter, new Callback<SimpleModel>() {
@@ -86,12 +92,17 @@ public class MoodCreationFragment extends Fragment {
             @Override
             public void success(SimpleModel o, Response response) {
                 mSimpleModel = o;
-	            mWebView.loadUrl(mSimpleModel.mGiphyData.mUrl);
+                mWebView.loadUrl(mSimpleModel.mGiphyData.mUrl);
+                hideLoading();
+
             }
 
             @Override
             public void failure(RetrofitError error) {
                 Log.d("MainActivity", error.getMessage());
+                hideLoading();
+                somethingWentWrong();
+
             }
         });
     }
@@ -138,6 +149,13 @@ public class MoodCreationFragment extends Fragment {
         }
     }
 
+    private void showLoading(){
+        mLoading.setVisibility(View.VISIBLE);
+    }
+
+    private void hideLoading(){
+        mLoading.setVisibility(View.GONE);
+    }
     private void sendFileWithUri(File image) throws Exception {
         String message = String.valueOf(mTextEdit.getText());
         Intent sendIntent = new Intent();

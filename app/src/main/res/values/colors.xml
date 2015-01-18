@@ -9,4 +9,5 @@
     <color name="share">#ff4671d5</color>
     <color name="background">#FFD073</color>
     <color name="hint">@color/share</color>
+    <color name="loading_background">@color/share</color>
 </resources>
