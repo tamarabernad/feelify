@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import es.moodbox.feelify.R;
+import es.moodbox.feelify.activities.InfoActivity;
 import es.moodbox.feelify.activities.MoodCreationActivity;
 import es.moodbox.feelify.adapters.MoodsAdapter;
 import es.moodbox.feelify.giphy.model.MoodModel;
@@ -74,6 +76,16 @@ public class MoodsFragment extends Fragment {
 		});
 
 		listView.setAdapter(mAdapter);
+
+
+        ImageButton btInfo = (ImageButton)v.findViewById(R.id.btInfo);
+        btInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), InfoActivity.class);
+                startActivity(intent);
+            }
+        });
 		return v;
 	}
 }
