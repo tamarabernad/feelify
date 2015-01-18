@@ -45,6 +45,10 @@ public class MoodCreationFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_mood_creation, container, false);
         mWebView = (WebView) v.findViewById(R.id.webView);
+        mWebView.getSettings().setLoadWithOverviewMode(true);
+        mWebView.getSettings().setUseWideViewPort(true);
+        mWebView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+        mWebView.setScrollbarFadingEnabled(false);
 
         mLoading = v.findViewById(R.id.loading_view);
         mLoading.setVisibility(View.GONE);
@@ -59,11 +63,11 @@ public class MoodCreationFragment extends Fragment {
             public void onClick(View v) {
                 try {
                     if (mSimpleModel == null 
-                            || mSimpleModel.mGiphyData == null 
-                            ||mSimpleModel.mGiphyData.mUrl == null ) {
+                            || mSimpleModel.giphyData == null
+                            ||mSimpleModel.giphyData.url == null ) {
                         somethingWentWrong();
                     }else {
-                        new DownloadFilesTask().execute(new URL(mSimpleModel.mGiphyData.mUrl));
+                        new DownloadFilesTask().execute(new URL(mSimpleModel.giphyData.url));
                     }
                 } catch (Exception e) {
                     Log.e(TAG, "Ups...." + e.getMessage());
@@ -103,7 +107,7 @@ public class MoodCreationFragment extends Fragment {
             @Override
             public void success(SimpleModel o, Response response) {
                 mSimpleModel = o;
-                mWebView.loadUrl(mSimpleModel.mGiphyData.mUrl);
+                mWebView.loadUrl(mSimpleModel.giphyData.url);
                 hideLoading();
 
             }

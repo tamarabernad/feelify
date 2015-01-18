@@ -8,17 +8,23 @@ import com.google.gson.annotations.SerializedName;
 public class SimpleModel {
 
 	@SerializedName("data")
-	public SimpleImage mGiphyData;
+	public SimpleImage giphyData;
 
 	public class SimpleImage {
 		//private String type;
 
 		@SerializedName("image_original_url")
-		public String mUrl;
+		public String url;
+
+		@SerializedName("image_width")
+		public String width;
+
+		@SerializedName("image_height")
+		public String height;
 
 		@Override
 		public String toString() {
-			return mUrl;
+			return url;
 		}
 	}
 }
