@@ -1,16 +1,15 @@
 package es.moodbox.feelify.activities;
 
-import android.app.Activity;
 import android.os.Bundle;
 
 import es.moodbox.feelify.R;
 import es.moodbox.feelify.fragments.MoodsFragment;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends BasicActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 

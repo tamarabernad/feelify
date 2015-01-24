@@ -37,7 +37,7 @@ public class FeelifyApplication extends Application {
         if (!mTrackers.containsKey(trackerId)) {
 
             GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
-            Tracker t = analytics.newTracker(R.xml.google_analytics);;
+            Tracker t = analytics.newTracker(R.xml.google_analytics);
             mTrackers.put(trackerId, t);
 
         }
