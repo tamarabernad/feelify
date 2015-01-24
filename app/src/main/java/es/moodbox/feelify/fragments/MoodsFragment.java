@@ -35,19 +35,23 @@ public class MoodsFragment extends Fragment {
 		moods.add("spicy");
 		moods.add("sad");
 		moods.add("grumpy");
+        moods.add("drunk");
 		moods.add("muffin");
 		moods.add("naughty");
 		moods.add("laugh");
+        moods.add("party");
 
 		List<String> moodsTags = new ArrayList<>();
 		moodsTags.add("funny");
 		moodsTags.add("happy");
 		moodsTags.add("spicy");
-		moodsTags.add("sad,tears");
+		moodsTags.add("sad");
 		moodsTags.add("grumpy");
+        moodsTags.add("drunk");
 		moodsTags.add("muffin");
 		moodsTags.add("naughty");
 		moodsTags.add("laugh");
+        moodsTags.add("party");
 
 		moodModels = new ArrayList<>();
 		MoodModel mood;
