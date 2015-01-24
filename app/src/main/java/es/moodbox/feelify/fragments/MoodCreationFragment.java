@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -39,8 +41,11 @@ public class MoodCreationFragment extends Fragment {
     private MoodModel mMoodModel;
     private GiphyModel mSimpleModel;
     private View mLoading;
-    RestAdapter restAdapter;
-    GiphyServiceInterface service;
+    private RestAdapter restAdapter;
+    private GiphyServiceInterface service;
+    private ImageButton btShare;
+
+    private Animation animScale;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,11 +63,13 @@ public class MoodCreationFragment extends Fragment {
 
         mTextEdit = (EditText) v.findViewById(R.id.editText);
 
+        animScale= AnimationUtils.loadAnimation(getActivity(), R.anim.scale);
         mMoodModel = (MoodModel) getActivity().getIntent().getSerializableExtra("model");
         mTextEdit.setText("mooding "+mMoodModel.name);
         mTextEdit.setSelection(0,mTextEdit.getText().length());
 
-        ImageButton btShare = (ImageButton) v.findViewById(R.id.btShare);
+        btShare = (ImageButton) v.findViewById(R.id.btShare);
+        btShare.setAnimation(animScale);
         btShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,6 +171,7 @@ public class MoodCreationFragment extends Fragment {
     public void onResume() {
         super.onResume();
         load();
+        btShare.animate();
     }
     public class DownloadFilesTask extends AsyncTask<URL, Integer, File> {
 
