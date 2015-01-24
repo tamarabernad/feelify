@@ -65,7 +65,7 @@ public class MoodCreationFragment extends Fragment {
 
         animScale= AnimationUtils.loadAnimation(getActivity(), R.anim.scale);
         mMoodModel = (MoodModel) getActivity().getIntent().getSerializableExtra("model");
-        mTextEdit.setText("mooding "+mMoodModel.name);
+        mTextEdit.setHint("mooding "+mMoodModel.name);
         mTextEdit.setSelection(0,mTextEdit.getText().length());
 
         btShare = (ImageButton) v.findViewById(R.id.btShare);
