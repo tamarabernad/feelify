@@ -1,9 +1,9 @@
-package es.moodbox.feelify.activities;
+package es.moodbox.mooding.activities;
 
 import android.os.Bundle;
 
-import es.moodbox.feelify.R;
-import es.moodbox.feelify.fragments.MoodsFragment;
+import es.moodbox.mooding.R;
+import es.moodbox.mooding.fragments.MoodsFragment;
 
 
 public class MainActivity extends BasicActivity {

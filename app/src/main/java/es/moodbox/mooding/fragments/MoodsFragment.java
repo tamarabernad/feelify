@@ -1,4 +1,4 @@
-package es.moodbox.feelify.fragments;
+package es.moodbox.mooding.fragments;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -14,12 +14,12 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-import es.moodbox.feelify.R;
-import es.moodbox.feelify.activities.BasicActivity;
-import es.moodbox.feelify.activities.InfoActivity;
-import es.moodbox.feelify.activities.MoodCreationActivity;
-import es.moodbox.feelify.adapters.MoodsAdapter;
-import es.moodbox.feelify.giphy.model.MoodModel;
+import es.moodbox.mooding.R;
+import es.moodbox.mooding.activities.BasicActivity;
+import es.moodbox.mooding.activities.InfoActivity;
+import es.moodbox.mooding.activities.MoodCreationActivity;
+import es.moodbox.mooding.adapters.MoodsAdapter;
+import es.moodbox.mooding.giphy.model.MoodModel;
 
 public class MoodsFragment extends Fragment {
 

@@ -1,4 +1,4 @@
-package es.moodbox.feelify.fragments;
+package es.moodbox.mooding.fragments;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -20,13 +20,13 @@ import java.io.File;
 import java.net.URL;
 import java.util.Random;
 
-import es.moodbox.feelify.R;
-import es.moodbox.feelify.activities.BasicActivity;
-import es.moodbox.feelify.giphy.model.GiphyModel;
-import es.moodbox.feelify.giphy.model.MoodModel;
-import es.moodbox.feelify.giphy.services.GiphyServiceInterface;
-import es.moodbox.feelify.services.FileDownloader;
-import es.moodbox.feelify.utils.AppConstants;
+import es.moodbox.mooding.R;
+import es.moodbox.mooding.activities.BasicActivity;
+import es.moodbox.mooding.giphy.model.GiphyModel;
+import es.moodbox.mooding.giphy.model.MoodModel;
+import es.moodbox.mooding.giphy.services.GiphyServiceInterface;
+import es.moodbox.mooding.services.FileDownloader;
+import es.moodbox.mooding.utils.AppConstants;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -114,7 +114,7 @@ public class MoodCreationFragment extends Fragment {
     }
 
     private void somethingWentWrong() {
-        Toast toast = Toast.makeText(getActivity(),"You just broke the app :_(",Toast.LENGTH_LONG);
+        Toast toast = Toast.makeText(getActivity(), "You just broke the app :_(", Toast.LENGTH_LONG);
         toast.show();
     }
 

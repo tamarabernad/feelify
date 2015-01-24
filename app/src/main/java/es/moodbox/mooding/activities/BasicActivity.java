@@ -1,4 +1,4 @@
-package es.moodbox.feelify.activities;
+package es.moodbox.mooding.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -8,8 +8,8 @@ import android.view.Window;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
-import es.moodbox.feelify.application.FeelifyApplication;
-import es.moodbox.feelify.interfaces.IndeterminateStateInterface;
+import es.moodbox.mooding.application.FeelifyApplication;
+import es.moodbox.mooding.interfaces.IndeterminateStateInterface;
 
 /**
  * Created by victoriza on 17/01/15.

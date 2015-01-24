@@ -1,4 +1,4 @@
-package es.moodbox.feelify.giphy.model;
+package es.moodbox.mooding.giphy.model;
 
 import java.io.Serializable;
 

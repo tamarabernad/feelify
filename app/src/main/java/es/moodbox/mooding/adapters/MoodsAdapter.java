@@ -1,4 +1,4 @@
-package es.moodbox.feelify.adapters;
+package es.moodbox.mooding.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,8 +10,8 @@ import android.widget.TextView;
 import java.util.List;
 import java.util.Random;
 
-import es.moodbox.feelify.R;
-import es.moodbox.feelify.giphy.model.MoodModel;
+import es.moodbox.mooding.R;
+import es.moodbox.mooding.giphy.model.MoodModel;
 
 /**
  * Created by machete on 1/17/15.

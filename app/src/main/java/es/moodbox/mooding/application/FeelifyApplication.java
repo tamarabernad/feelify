@@ -1,4 +1,4 @@
-package es.moodbox.feelify.application;
+package es.moodbox.mooding.application;
 
 import android.app.Application;
 import android.content.pm.PackageManager;
@@ -9,7 +9,7 @@ import com.google.android.gms.analytics.Tracker;
 
 import java.util.HashMap;
 
-import es.moodbox.feelify.R;
+import es.moodbox.mooding.R;
 
 /**
  * Created by victoriza on 24/01/15.

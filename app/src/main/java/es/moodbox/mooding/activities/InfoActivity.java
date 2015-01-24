@@ -1,9 +1,9 @@
-package es.moodbox.feelify.activities;
+package es.moodbox.mooding.activities;
 
 import android.os.Bundle;
 import android.webkit.WebView;
 
-import es.moodbox.feelify.R;
+import es.moodbox.mooding.R;
 
 /**
  * Created by machete on 1/18/15.

@@ -1,9 +1,9 @@
-package es.moodbox.feelify.activities;
+package es.moodbox.mooding.activities;
 
 import android.os.Bundle;
 
-import es.moodbox.feelify.R;
-import es.moodbox.feelify.fragments.MoodCreationFragment;
+import es.moodbox.mooding.R;
+import es.moodbox.mooding.fragments.MoodCreationFragment;
 
 /**
  * Created by machete on 1/11/15.

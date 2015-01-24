@@ -1,4 +1,4 @@
-package es.moodbox.feelify.utils;
+package es.moodbox.mooding.utils;
 
 /**
  * Created by machete on 1/11/15.

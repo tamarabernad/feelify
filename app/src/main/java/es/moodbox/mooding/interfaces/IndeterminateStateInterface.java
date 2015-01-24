@@ -1,4 +1,4 @@
-package es.moodbox.feelify.interfaces;
+package es.moodbox.mooding.interfaces;
 
 /**
  * Created by victoriza on 17/01/15.

@@ -1,4 +1,4 @@
-package es.moodbox.feelify.services;
+package es.moodbox.mooding.services;
 
 import android.content.Context;
 import android.util.Log;

@@ -1,7 +1,7 @@
-package es.moodbox.feelify.giphy.services;
+package es.moodbox.mooding.giphy.services;
 
-import es.moodbox.feelify.giphy.model.GiphyModel;
-import es.moodbox.feelify.giphy.model.SimpleModel;
+import es.moodbox.mooding.giphy.model.GiphyModel;
+import es.moodbox.mooding.giphy.model.SimpleModel;
 import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.Query;

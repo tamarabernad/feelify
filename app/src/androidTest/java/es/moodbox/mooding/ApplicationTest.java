@@ -1,4 +1,4 @@
-package es.moodbox.feelify;
+package es.moodbox.mooding;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
