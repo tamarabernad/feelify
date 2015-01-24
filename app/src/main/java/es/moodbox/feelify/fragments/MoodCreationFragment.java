@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.net.URL;
+import java.util.Random;
 
 import es.moodbox.feelify.R;
 import es.moodbox.feelify.activities.BasicActivity;
@@ -109,6 +110,8 @@ public class MoodCreationFragment extends Fragment {
 
             @Override
             public void success(GiphyModel o, Response response) {
+                int offset = randInt(0,o.mGiphyPagination.totalCount);
+
                 mSimpleModel = o;
                 if (!mSimpleModel.mGiphyData.isEmpty()) {
                     mWebView.loadUrl(mSimpleModel.mGiphyData.get(0).images.image.mUrl);
@@ -126,7 +129,11 @@ public class MoodCreationFragment extends Fragment {
             }
         });
     }
-
+    public static int randInt(int min, int max) {
+        Random rand = new Random();
+        int randomNum = rand.nextInt((max - min) + 1) + min;
+        return randomNum;
+    }
     public void onResume() {
         super.onResume();
         load();
