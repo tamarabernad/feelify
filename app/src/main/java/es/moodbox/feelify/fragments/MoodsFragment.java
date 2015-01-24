@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.moodbox.feelify.R;
+import es.moodbox.feelify.activities.BasicActivity;
 import es.moodbox.feelify.activities.InfoActivity;
 import es.moodbox.feelify.activities.MoodCreationActivity;
 import es.moodbox.feelify.adapters.MoodsAdapter;
@@ -53,7 +54,7 @@ public class MoodsFragment extends Fragment {
 		int index = 0;
 		for (String moodName : moods) {
 			mood = new MoodModel();
-			mood.id = index + "";
+			mood.id = moodName.toLowerCase()+"_"+index;
 			mood.name = moodName;
 			mood.searchTags = moodsTags.get(index);
 			moodModels.add(mood);
@@ -69,7 +70,10 @@ public class MoodsFragment extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				Log.d("MoodsFragment", "position: " + moodModels.get(position));
-				Intent intent = new Intent(getActivity(), MoodCreationActivity.class);
+
+                ((BasicActivity)getActivity()).trackEvent("click","mood-select/"+moodModels.get(position).id);
+
+                Intent intent = new Intent(getActivity(), MoodCreationActivity.class);
 				intent.putExtra("model", moodModels.get(position));
 				startActivity(intent);
 			}
