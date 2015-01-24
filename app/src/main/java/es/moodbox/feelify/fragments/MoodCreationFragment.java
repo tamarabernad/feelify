@@ -19,8 +19,8 @@ import java.net.URL;
 
 import es.moodbox.feelify.R;
 import es.moodbox.feelify.activities.BasicActivity;
+import es.moodbox.feelify.giphy.model.GiphyModel;
 import es.moodbox.feelify.giphy.model.MoodModel;
-import es.moodbox.feelify.giphy.model.SimpleModel;
 import es.moodbox.feelify.giphy.services.GiphyServiceInterface;
 import es.moodbox.feelify.services.FileDownloader;
 import es.moodbox.feelify.utils.AppConstants;
@@ -36,7 +36,7 @@ public class MoodCreationFragment extends Fragment {
     private WebView mWebView;
     private EditText mTextEdit;
     private MoodModel mMoodModel;
-    private SimpleModel mSimpleModel;
+    private GiphyModel mSimpleModel;
     private View mLoading;
 
     @Override
@@ -63,11 +63,14 @@ public class MoodCreationFragment extends Fragment {
             public void onClick(View v) {
                 try {
                     if (mSimpleModel == null 
-                            || mSimpleModel.giphyData == null
-                            ||mSimpleModel.giphyData.url == null ) {
+                            || mSimpleModel.mGiphyData == null
+                            ||mSimpleModel.mGiphyData.isEmpty()
+                            || mSimpleModel.mGiphyData.get(0).images == null
+                            || mSimpleModel.mGiphyData.get(0).images.image == null
+                            || mSimpleModel.mGiphyData.get(0).images.image.mUrl == null ) {
                         somethingWentWrong();
                     }else {
-                        new DownloadFilesTask().execute(new URL(mSimpleModel.giphyData.url));
+                        new DownloadFilesTask().execute(new URL(mSimpleModel.mGiphyData.get(0).images.image.mUrl));
                     }
                 } catch (Exception e) {
                     Log.e(TAG, "Ups...." + e.getMessage());
@@ -95,19 +98,21 @@ public class MoodCreationFragment extends Fragment {
         showLoading();
 
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint("http://api.giphy.com/v1/stickers/")
+                .setEndpoint("http://api.giphy.com/v1/gifs/")
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
 
 
         GiphyServiceInterface service = restAdapter.create(GiphyServiceInterface.class);
         String searchParameter = mMoodModel.searchTags.replace(",","+");
-        service.random(searchParameter, new Callback<SimpleModel>() {
+        service.search(searchParameter, new Callback<GiphyModel>() {
 
             @Override
-            public void success(SimpleModel o, Response response) {
+            public void success(GiphyModel o, Response response) {
                 mSimpleModel = o;
-                mWebView.loadUrl(mSimpleModel.giphyData.url);
+                if (!mSimpleModel.mGiphyData.isEmpty()) {
+                    mWebView.loadUrl(mSimpleModel.mGiphyData.get(0).images.image.mUrl);
+                }
                 hideLoading();
 
             }

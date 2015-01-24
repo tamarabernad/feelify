@@ -39,8 +39,8 @@ public class MoodsFragment extends Fragment {
 		moods.add("laugh");
 
 		List<String> moodsTags = new ArrayList<>();
-		moodsTags.add("funny,laugh,lol");
-		moodsTags.add("happy,laugh,jump");
+		moodsTags.add("funny");
+		moodsTags.add("happy");
 		moodsTags.add("spicy");
 		moodsTags.add("sad,tears");
 		moodsTags.add("grumpy");
