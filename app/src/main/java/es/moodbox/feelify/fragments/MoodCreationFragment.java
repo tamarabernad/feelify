@@ -74,7 +74,6 @@ public class MoodCreationFragment extends Fragment {
         mTextEdit.setSelection(0,mTextEdit.getText().length());
 
         btShare = (ImageButton) v.findViewById(R.id.btShare);
-        btShare.setAnimation(animScale);
         btShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,13 +97,12 @@ public class MoodCreationFragment extends Fragment {
         });
 
         mNext = (ImageButton) v.findViewById(R.id.btNext);
-        mNext.setAnimation(animRotate);
         mNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((BasicActivity)getActivity()).trackEvent("click","mood-creation/random");
                 mWebView.loadUrl("about:blank");
-                mNext.animate();
+                mNext.startAnimation(animRotate);
                 load();
             }
         });
@@ -180,8 +178,7 @@ public class MoodCreationFragment extends Fragment {
     public void onResume() {
         super.onResume();
         load();
-
-        btShare.animate();
+        btShare.startAnimation(animScale);
     }
 
     public class DownloadFilesTask extends AsyncTask<URL, Integer, File> {
