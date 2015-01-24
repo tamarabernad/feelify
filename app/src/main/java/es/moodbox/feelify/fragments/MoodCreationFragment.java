@@ -43,9 +43,12 @@ public class MoodCreationFragment extends Fragment {
     private View mLoading;
     private RestAdapter restAdapter;
     private GiphyServiceInterface service;
+
     private ImageButton btShare;
+    private ImageButton mNext;
 
     private Animation animScale;
+    private Animation animRotate;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,8 +67,10 @@ public class MoodCreationFragment extends Fragment {
         mTextEdit = (EditText) v.findViewById(R.id.editText);
 
         animScale= AnimationUtils.loadAnimation(getActivity(), R.anim.scale);
+        animRotate= AnimationUtils.loadAnimation(getActivity(), R.anim.rotate);
+
         mMoodModel = (MoodModel) getActivity().getIntent().getSerializableExtra("model");
-        mTextEdit.setText("mooding "+mMoodModel.name);
+        mTextEdit.setHint("mooding "+mMoodModel.name);
         mTextEdit.setSelection(0,mTextEdit.getText().length());
 
         btShare = (ImageButton) v.findViewById(R.id.btShare);
@@ -92,12 +97,14 @@ public class MoodCreationFragment extends Fragment {
             }
         });
 
-        ImageButton mNext = (ImageButton) v.findViewById(R.id.btNext);
+        mNext = (ImageButton) v.findViewById(R.id.btNext);
+        mNext.setAnimation(animRotate);
         mNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((BasicActivity)getActivity()).trackEvent("click","mood-creation/random");
                 mWebView.loadUrl("about:blank");
+                mNext.animate();
                 load();
             }
         });
@@ -140,6 +147,7 @@ public class MoodCreationFragment extends Fragment {
             }
         });
     }
+
     private void loadRandom(GiphyModel o){
         int offset = randInt(0,o.mGiphyPagination.totalCount);
         String searchParameter = mMoodModel.searchTags.replace(",","+");
@@ -168,11 +176,14 @@ public class MoodCreationFragment extends Fragment {
         int randomNum = rand.nextInt((max - min) + 1) + min;
         return randomNum;
     }
+
     public void onResume() {
         super.onResume();
         load();
+
         btShare.animate();
     }
+
     public class DownloadFilesTask extends AsyncTask<URL, Integer, File> {
 
         protected File doInBackground(URL... urls) {
