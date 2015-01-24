@@ -64,6 +64,7 @@ public class MoodCreationFragment extends Fragment {
         btShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ((BasicActivity)getActivity()).trackEvent("click","mood-creation/share");
                 try {
                     if (mSimpleModel == null 
                             || mSimpleModel.mGiphyData == null
@@ -86,6 +87,7 @@ public class MoodCreationFragment extends Fragment {
         mNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ((BasicActivity)getActivity()).trackEvent("click","mood-creation/random");
                 mWebView.loadUrl("about:blank");
                 load();
             }
@@ -217,4 +219,5 @@ public class MoodCreationFragment extends Fragment {
         sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(image));
         startActivity(sendIntent);
     }
+
 }

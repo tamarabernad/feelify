@@ -20,6 +20,14 @@ public class BasicActivity extends Activity implements IndeterminateStateInterfa
         super.onCreate(savedState);
     }
 
+    public void trackEvent(String key, String eventName) {
+        Tracker t = getTracker();
+
+        t.set(key,eventName);
+
+        t.send(new HitBuilders.AppViewBuilder().build());
+    }
+
     protected void trackScreen(String screenName) {
         // Get tracker.
         Tracker t = getTracker();
