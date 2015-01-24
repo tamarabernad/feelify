@@ -12,6 +12,9 @@ public class GiphyModel {
     @SerializedName("data")
     public List<GiphyData> mGiphyData;
 
+    @SerializedName("pagination")
+    public GiphyPagination mGiphyPagination;
+
 
     @Override
     public String toString() {
@@ -45,6 +48,16 @@ public class GiphyModel {
         @Override
         public String toString() {
             return mUrl;
+        }
+    }
+
+    public class GiphyPagination{
+        @SerializedName("total_count")
+        public Integer totalCount;
+
+        @Override
+        public String toString() {
+            return totalCount.toString();
         }
     }
 }
