@@ -31,7 +31,7 @@ public class GiphyModel {
         }
     }
     public class GiphyImages{
-        @SerializedName("original")
+        @SerializedName("downsized")
         public GiphyImage image;
 
         @Override
