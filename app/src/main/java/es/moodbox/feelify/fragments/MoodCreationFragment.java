@@ -16,11 +16,12 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.net.URL;
+import java.util.Random;
 
 import es.moodbox.feelify.R;
 import es.moodbox.feelify.activities.BasicActivity;
+import es.moodbox.feelify.giphy.model.GiphyModel;
 import es.moodbox.feelify.giphy.model.MoodModel;
-import es.moodbox.feelify.giphy.model.SimpleModel;
 import es.moodbox.feelify.giphy.services.GiphyServiceInterface;
 import es.moodbox.feelify.services.FileDownloader;
 import es.moodbox.feelify.utils.AppConstants;
@@ -36,8 +37,10 @@ public class MoodCreationFragment extends Fragment {
     private WebView mWebView;
     private EditText mTextEdit;
     private MoodModel mMoodModel;
-    private SimpleModel mSimpleModel;
+    private GiphyModel mSimpleModel;
     private View mLoading;
+    RestAdapter restAdapter;
+    GiphyServiceInterface service;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,11 +66,14 @@ public class MoodCreationFragment extends Fragment {
             public void onClick(View v) {
                 try {
                     if (mSimpleModel == null 
-                            || mSimpleModel.giphyData == null
-                            ||mSimpleModel.giphyData.url == null ) {
+                            || mSimpleModel.mGiphyData == null
+                            ||mSimpleModel.mGiphyData.isEmpty()
+                            || mSimpleModel.mGiphyData.get(0).images == null
+                            || mSimpleModel.mGiphyData.get(0).images.image == null
+                            || mSimpleModel.mGiphyData.get(0).images.image.mUrl == null ) {
                         somethingWentWrong();
                     }else {
-                        new DownloadFilesTask().execute(new URL(mSimpleModel.giphyData.url));
+                        new DownloadFilesTask().execute(new URL(mSimpleModel.mGiphyData.get(0).images.image.mUrl));
                     }
                 } catch (Exception e) {
                     Log.e(TAG, "Ups...." + e.getMessage());
@@ -80,6 +86,7 @@ public class MoodCreationFragment extends Fragment {
         mNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mWebView.loadUrl("about:blank");
                 load();
             }
         });
@@ -93,23 +100,24 @@ public class MoodCreationFragment extends Fragment {
 
     public void load() {
         showLoading();
-
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint("http://api.giphy.com/v1/stickers/")
+        restAdapter = new RestAdapter.Builder()
+                .setEndpoint("http://api.giphy.com/v1/gifs/")
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
 
 
-        GiphyServiceInterface service = restAdapter.create(GiphyServiceInterface.class);
+        service = restAdapter.create(GiphyServiceInterface.class);
+
+        loadForRandom();
+
+    }
+    private void loadForRandom(){
         String searchParameter = mMoodModel.searchTags.replace(",","+");
-        service.random(searchParameter, new Callback<SimpleModel>() {
+        service.search(searchParameter, new Callback<GiphyModel>() {
 
             @Override
-            public void success(SimpleModel o, Response response) {
-                mSimpleModel = o;
-                mWebView.loadUrl(mSimpleModel.giphyData.url);
-                hideLoading();
-
+            public void success(GiphyModel o, Response response) {
+                loadRandom(o);
             }
 
             @Override
@@ -121,7 +129,34 @@ public class MoodCreationFragment extends Fragment {
             }
         });
     }
+    private void loadRandom(GiphyModel o){
+        int offset = randInt(0,o.mGiphyPagination.totalCount);
+        String searchParameter = mMoodModel.searchTags.replace(",","+");
+        service.searchRandom(searchParameter, offset, new Callback<GiphyModel>() {
 
+            @Override
+            public void success(GiphyModel o, Response response) {
+                mSimpleModel = o;
+                if (!mSimpleModel.mGiphyData.isEmpty()) {
+                    mWebView.loadUrl(mSimpleModel.mGiphyData.get(0).images.image.mUrl);
+                }
+                hideLoading();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("MainActivity", error.getMessage());
+                hideLoading();
+                somethingWentWrong();
+
+            }
+        });
+    }
+    public static int randInt(int min, int max) {
+        Random rand = new Random();
+        int randomNum = rand.nextInt((max - min) + 1) + min;
+        return randomNum;
+    }
     public void onResume() {
         super.onResume();
         load();
