@@ -27,9 +27,4 @@ public class MoodCreationActivity extends BasicActivity {
         trackScreen("mood-creation");
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        trackEvent("click","mood-creation/back-pressed");
-    }
 }

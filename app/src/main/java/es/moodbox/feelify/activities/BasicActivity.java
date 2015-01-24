@@ -2,6 +2,7 @@ package es.moodbox.feelify.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
 
 import com.google.android.gms.analytics.HitBuilders;
@@ -15,20 +16,26 @@ import es.moodbox.feelify.interfaces.IndeterminateStateInterface;
  */
 public class BasicActivity extends Activity implements IndeterminateStateInterface {
 
+    private final static String TAG = BasicActivity.class.getSimpleName();
+
     public void onCreate(Bundle savedState) {
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         super.onCreate(savedState);
     }
 
-    public void trackEvent(String key, String eventName) {
+    public void trackEvent(String categoryId, String action) {
+        Log.d(TAG, " track event categoryId:  "+categoryId+ " action: "+action);
         Tracker t = getTracker();
 
-        t.set(key,eventName);
-
-        t.send(new HitBuilders.AppViewBuilder().build());
+        // Build and send an Event.
+        t.send(new HitBuilders.EventBuilder()
+                .setCategory(categoryId)
+                .setAction(action)
+                .build());
     }
 
     protected void trackScreen(String screenName) {
+        Log.d(TAG, " track event screen:  "+screenName);
         // Get tracker.
         Tracker t = getTracker();
 
@@ -44,6 +51,8 @@ public class BasicActivity extends Activity implements IndeterminateStateInterfa
         // Get tracker.
         Tracker t = ((FeelifyApplication) getApplication()).getTracker(FeelifyApplication.TrackerName.APP_TRACKER);
         t.setAppVersion(((FeelifyApplication) getApplication()).getAppVersion());
+        // Enable Display Features.
+        t.enableAdvertisingIdCollection(true);
         return t;
     }
 
