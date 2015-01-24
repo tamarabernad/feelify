@@ -39,6 +39,8 @@ public class MoodCreationFragment extends Fragment {
     private MoodModel mMoodModel;
     private GiphyModel mSimpleModel;
     private View mLoading;
+    RestAdapter restAdapter;
+    GiphyServiceInterface service;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -84,6 +86,7 @@ public class MoodCreationFragment extends Fragment {
         mNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mWebView.loadUrl("about:blank");
                 load();
             }
         });
@@ -97,27 +100,47 @@ public class MoodCreationFragment extends Fragment {
 
     public void load() {
         showLoading();
-
-        RestAdapter restAdapter = new RestAdapter.Builder()
+        restAdapter = new RestAdapter.Builder()
                 .setEndpoint("http://api.giphy.com/v1/gifs/")
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
 
 
-        GiphyServiceInterface service = restAdapter.create(GiphyServiceInterface.class);
+        service = restAdapter.create(GiphyServiceInterface.class);
+
+        loadForRandom();
+
+    }
+    private void loadForRandom(){
         String searchParameter = mMoodModel.searchTags.replace(",","+");
         service.search(searchParameter, new Callback<GiphyModel>() {
 
             @Override
             public void success(GiphyModel o, Response response) {
-                int offset = randInt(0,o.mGiphyPagination.totalCount);
+                loadRandom(o);
+            }
 
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("MainActivity", error.getMessage());
+                hideLoading();
+                somethingWentWrong();
+
+            }
+        });
+    }
+    private void loadRandom(GiphyModel o){
+        int offset = randInt(0,o.mGiphyPagination.totalCount);
+        String searchParameter = mMoodModel.searchTags.replace(",","+");
+        service.searchRandom(searchParameter, offset, new Callback<GiphyModel>() {
+
+            @Override
+            public void success(GiphyModel o, Response response) {
                 mSimpleModel = o;
                 if (!mSimpleModel.mGiphyData.isEmpty()) {
                     mWebView.loadUrl(mSimpleModel.mGiphyData.get(0).images.image.mUrl);
                 }
                 hideLoading();
-
             }
 
             @Override
