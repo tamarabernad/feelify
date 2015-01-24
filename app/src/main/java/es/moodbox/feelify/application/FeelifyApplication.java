@@ -1,6 +1,7 @@
 package es.moodbox.feelify.application;
 
 import android.app.Application;
+import android.content.pm.PackageManager;
 import android.util.Log;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
@@ -15,31 +16,41 @@ import es.moodbox.feelify.R;
  */
 public class FeelifyApplication extends Application {
 
-	private final static String TAG = FeelifyApplication.class.getSimpleName();
+    private final static String TAG = FeelifyApplication.class.getSimpleName();
 
-	/**
-	 * Enum used to identify the tracker that needs to be used for tracking.
-	 *
-	 * A single tracker is usually enough for most purposes. In case you do need multiple trackers,
-	 * storing them all in Application object helps ensure that they are created only once per
-	 * application instance.
-	 */
-	public enum TrackerName {
-		APP_TRACKER, // Tracker used only in this app.
-	}
+    /**
+     * Enum used to identify the tracker that needs to be used for tracking.
+     *
+     * A single tracker is usually enough for most purposes. In case you do need multiple trackers,
+     * storing them all in Application object helps ensure that they are created only once per
+     * application instance.
+     */
+    public enum TrackerName {
+        APP_TRACKER, // Tracker used only in this app.
+    }
 
-	private static HashMap<TrackerName, Tracker> mTrackers = new HashMap<TrackerName, Tracker>();
+    private static HashMap<TrackerName, Tracker> mTrackers = new HashMap<TrackerName, Tracker>();
 
-	public synchronized Tracker getTracker(TrackerName trackerId) {
+    public synchronized Tracker getTracker(TrackerName trackerId) {
 
-		Log.d(TAG, " Google Analytics tracker cfg: "+trackerId);
-		if (!mTrackers.containsKey(trackerId)) {
+        Log.d(TAG, " Google Analytics tracker cfg: "+trackerId);
+        if (!mTrackers.containsKey(trackerId)) {
 
-			GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
-			Tracker t = analytics.newTracker(R.xml.google_analytics);;
-			mTrackers.put(trackerId, t);
+            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
+            Tracker t = analytics.newTracker(R.xml.google_analytics);;
+            mTrackers.put(trackerId, t);
 
-		}
-		return mTrackers.get(trackerId);
-	}
+        }
+        return mTrackers.get(trackerId);
+    }
+
+    public String getAppVersion(){
+        String versionName = "";
+        try {
+            versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            //Ignore, we ask for the current app package. Has to exist.
+        }
+        return versionName;
+    }
 }
