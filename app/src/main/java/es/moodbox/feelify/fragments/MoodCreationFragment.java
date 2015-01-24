@@ -69,7 +69,7 @@ public class MoodCreationFragment extends Fragment {
 
         animScale= AnimationUtils.loadAnimation(getActivity(), R.anim.scale);
         animScaleNextBt= AnimationUtils.loadAnimation(getActivity(), R.anim.scale);
-        animScaleNextBt.setStartOffset(400);
+        animScaleNextBt.setStartOffset(animScaleNextBt.getStartOffset()+200);
         animRotate= AnimationUtils.loadAnimation(getActivity(), R.anim.rotate);
 
         mMoodModel = (MoodModel) getActivity().getIntent().getSerializableExtra("model");
