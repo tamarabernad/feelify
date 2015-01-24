@@ -61,6 +61,7 @@ public class MoodCreationFragment extends Fragment {
         mWebView.getSettings().setUseWideViewPort(true);
         mWebView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
         mWebView.setScrollbarFadingEnabled(false);
+        mWebView.setBackgroundColor(0x00000000);
 
         mLoading = v.findViewById(R.id.loading_view);
         mLoading.setVisibility(View.GONE);
