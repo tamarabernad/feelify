@@ -48,6 +48,7 @@ public class MoodCreationFragment extends Fragment {
     private ImageButton mNext;
 
     private Animation animScale;
+    private Animation animScaleNextBt;
     private Animation animRotate;
 
     @Override
@@ -67,6 +68,8 @@ public class MoodCreationFragment extends Fragment {
         mTextEdit = (EditText) v.findViewById(R.id.editText);
 
         animScale= AnimationUtils.loadAnimation(getActivity(), R.anim.scale);
+        animScaleNextBt= AnimationUtils.loadAnimation(getActivity(), R.anim.scale);
+        animScaleNextBt.setStartOffset(400);
         animRotate= AnimationUtils.loadAnimation(getActivity(), R.anim.rotate);
 
         mMoodModel = (MoodModel) getActivity().getIntent().getSerializableExtra("model");
@@ -179,6 +182,7 @@ public class MoodCreationFragment extends Fragment {
         super.onResume();
         load();
         btShare.startAnimation(animScale);
+        mNext.startAnimation(animScaleNextBt);
     }
 
     public class DownloadFilesTask extends AsyncTask<URL, Integer, File> {
