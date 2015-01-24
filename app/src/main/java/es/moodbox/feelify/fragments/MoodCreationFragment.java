@@ -59,6 +59,8 @@ public class MoodCreationFragment extends Fragment {
         mTextEdit = (EditText) v.findViewById(R.id.editText);
 
         mMoodModel = (MoodModel) getActivity().getIntent().getSerializableExtra("model");
+        mTextEdit.setText("mooding "+mMoodModel.name);
+        mTextEdit.setSelection(0,mTextEdit.getText().length());
 
         ImageButton btShare = (ImageButton) v.findViewById(R.id.btShare);
         btShare.setOnClickListener(new View.OnClickListener() {
