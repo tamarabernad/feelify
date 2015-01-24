@@ -16,4 +16,10 @@ public class InfoActivity extends BasicActivity {
         WebView webView = (WebView)findViewById(R.id.wvInfo);
         webView.loadUrl("file:///android_asset/info.html");
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        trackScreen("info");
+    }
 }

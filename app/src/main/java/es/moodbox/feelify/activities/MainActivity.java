@@ -19,4 +19,10 @@ public class MainActivity extends BasicActivity {
                     .commit();
         }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        trackScreen("home");
+    }
 }
