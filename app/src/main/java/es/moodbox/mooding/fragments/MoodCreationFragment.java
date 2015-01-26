@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -62,6 +63,16 @@ public class MoodCreationFragment extends Fragment {
         mWebView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
         mWebView.setScrollbarFadingEnabled(false);
         mWebView.setBackgroundColor(0x00000000);
+        mWebView.setWebViewClient(new WebViewClient() {
+
+            public void onPageFinished(WebView view, String url) {
+                // do your stuff here
+                if(!view.getUrl().equals("about:blank")){
+                    hideLoading();
+                }
+
+            }
+        });
 
         mLoading = v.findViewById(R.id.loading_view);
         mLoading.setVisibility(View.GONE);
@@ -161,7 +172,7 @@ public class MoodCreationFragment extends Fragment {
                 if (!mSimpleModel.mGiphyData.isEmpty()) {
                     mWebView.loadUrl(mSimpleModel.mGiphyData.get(0).images.image.mUrl);
                 }
-                hideLoading();
+
             }
 
             @Override

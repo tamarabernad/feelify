@@ -35,7 +35,7 @@ public class MoodsFragment extends Fragment {
 		moods.add("spicy");
 		moods.add("sad");
 		moods.add("grumpy");
-        moods.add("drunk");
+        moods.add("cat");
 		moods.add("muffin");
 		moods.add("naughty");
 		moods.add("laugh");
@@ -47,7 +47,7 @@ public class MoodsFragment extends Fragment {
 		moodsTags.add("spicy");
 		moodsTags.add("sad");
 		moodsTags.add("grumpy");
-        moodsTags.add("drunk");
+        moodsTags.add("cat");
 		moodsTags.add("muffin");
 		moodsTags.add("naughty");
 		moodsTags.add("laugh");
@@ -62,6 +62,7 @@ public class MoodsFragment extends Fragment {
 			mood.name = moodName;
 			mood.searchTags = moodsTags.get(index);
 			moodModels.add(mood);
+            index++;
 		}
 
 
