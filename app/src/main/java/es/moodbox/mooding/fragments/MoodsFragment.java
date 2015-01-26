@@ -37,7 +37,7 @@ public class MoodsFragment extends Fragment {
 		moods.add("grumpy");
         moods.add("cat");
 		moods.add("muffin");
-		moods.add("naughty");
+		moods.add("sexy");
 		moods.add("laugh");
         moods.add("party");
 
@@ -49,7 +49,7 @@ public class MoodsFragment extends Fragment {
 		moodsTags.add("grumpy");
         moodsTags.add("cat");
 		moodsTags.add("muffin");
-		moodsTags.add("naughty");
+		moodsTags.add("sexy");
 		moodsTags.add("laugh");
         moodsTags.add("party");
 
