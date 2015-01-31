@@ -15,7 +15,7 @@
 
         <activity
             android:name="es.moodbox.mooding.activities.MainActivity"
-            android:label="" >
+            android:label="moodimage" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
